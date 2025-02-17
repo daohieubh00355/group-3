@@ -16,7 +16,7 @@
             <ul class="flex space-x-6">
                 <li><a href="index.html" class="hover:underline">Home</a></li>
                 <li><a href="#services" class="hover:underline">Services</a></li>
-                <li><a href="#" class="hover:underline">Photo Editing with AI</a></li>
+                <li><a href="#" class="hover:underline" id="photo-editing-link">Photo Editing with AI</a></li>
                 <li><a href="signup.html" class="hover:underline" id="signup-link">Sign Up</a></li>
                 <li><a href="signin.html" class="hover:underline" id="login-link">Sign In</a></li>
                 <li id="user-info" class="hidden text-white font-bold"></li>
@@ -25,13 +25,89 @@
         </nav>
     </header>
     
+    <!-- Hero Section -->
     <section id="home" class="hero bg-cover bg-center h-[500px] flex flex-col items-center justify-center text-white text-center transition-all duration-500 hover:opacity-90" style="background-image: url('https://www.eetimes.com/wp-content/uploads/AdobeStock_599678056.jpeg');">
         <h1 class="text-4xl font-bold drop-shadow-lg">AI Photo Editor</h1>
         <p id="welcome-message" class="text-lg mt-4 drop-shadow-md"></p>
     </section>
+
+    <!-- Photo Editing Section (Hidden initially) -->
+    <section id="photo-editing-section" class="hidden py-16 container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">AI Photo Editing</h2>
+        <p>Chào mừng bạn đến với công cụ chỉnh sửa ảnh sử dụng AI của chúng tôi! Hãy chọn công cụ mà bạn muốn thử ngay.</p>
+
+        <!-- AI Tools Buttons -->
+        <div class="mt-8">
+            <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">AI Image Editor</button>
+            <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 ml-4">Background Remover</button>
+            <button class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 ml-4">Image Colorizer</button>
+            <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 ml-4">Super Resolution</button>
+            <button class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 ml-4">Expand Image</button>
+            <button class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 ml-4">Create Image with Text</button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">Our AI Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+            <!-- AI Image Editor -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/648c73b8352f4d10a8ff79ea8bb229a3/image_editor.png" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">AI Image Editor</h3>
+                <p>Edit your images with advanced AI tools to enhance or transform them.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Start Editing</button>
+            </div>
+            
+            <!-- Background Remover -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/3685da5f3680468aa6cadc400a52bb08/bg_remove_thumb.png" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">Background Remover</h3>
+                <p>Easily remove backgrounds from your images for a clean and professional look.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Remove Background</button>
+            </div>
+            
+            <!-- Image Colorizer -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/210f452c80e0482c89edf7a69fec4d46/colorizer.png" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">Image Colorizer</h3>
+                <p>Turn black and white photos into vibrant colored images with AI.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Colorize Image</button>
+            </div>
+            
+            <!-- Super Resolution -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/0807ebc952fc4e0f9c953ece4551ff22/super_res.png" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">Super Resolution</h3>
+                <p>Increase the resolution of your images to make them sharper and clearer.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Enhance Resolution</button>
+            </div>
+            
+            <!-- Expand Image -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/eafea118c5204c4ca57096699527f5b3/Before.png" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">Expand Image</h3>
+                <p>Expand your image while preserving quality with the power of AI.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Expand Image</button>
+            </div>
+            
+            <!-- Create Image with Text -->
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/b6dcce965af54c26918924813f3cd288/cyborg.jpg" class="mb-4 w-full rounded-lg"> 
+                <h3 class="font-semibold text-lg">Create Image with Text</h3>
+                <p>Generate unique images by simply describing what you want to see.</p>
+                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Create Image</button>
+            </div>
+        </div>
+    </section>
     
+    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
+        <p>&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
+    </footer>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Handle login/logout states
             const username = localStorage.getItem("loggedInUser");
             const userInfo = document.getElementById("user-info");
             const logoutButton = document.getElementById("logout-button");
@@ -49,45 +125,21 @@
             } else {
                 welcomeMessage.textContent = "A powerful assistant to help you edit photos with AI. Turn your ideas into reality.";
             }
-logoutButton.addEventListener("click", function() {
+
+            logoutButton.addEventListener("click", function() {
                 localStorage.removeItem("loggedInUser");
                 window.location.reload();
             });
+
+            // Handle "Photo Editing with AI" link click
+            const photoEditingLink = document.getElementById("photo-editing-link");
+            const photoEditingSection = document.getElementById("photo-editing-section");
+
+            photoEditingLink.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default navigation
+                photoEditingSection.classList.remove("hidden"); // Show photo editing section
+            });
         });
     </script>
-    
-    <section id="services" class="py-16 container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6">Our AI Services</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/648c73b8352f4d10a8ff79ea8bb229a3/image_editor.png" class="mb-4 w-full rounded-lg"> 
-                AI Image Editor
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/3685da5f3680468aa6cadc400a52bb08/bg_remove_thumb.png" class="mb-4 w-full rounded-lg"> 
-                Background Remover
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/210f452c80e0482c89edf7a69fec4d46/colorizer.png" class="mb-4 w-full rounded-lg"> 
-                Image Colorizer
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/0807ebc952fc4e0f9c953ece4551ff22/super_res.png" class="mb-4 w-full rounded-lg"> 
-                Super Resolution
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/eafea118c5204c4ca57096699527f5b3/Before.png" class="mb-4 w-full rounded-lg"> 
-                Expand Image
-            </div>
-            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/b6dcce965af54c26918924813f3cd288/cyborg.jpg" class="mb-4 w-full rounded-lg"> 
-                Create Image with Text
-            </div>
-        </div>
-    </section>
-    
-    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
-        <p>&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
-    </footer>
 </body>
 </html>
