@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-blue-600 relative">
+    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="absolute top-4 left-4 w-80 h-auto">
+
+    <div class="bg-blue-500 p-8 rounded-3xl shadow-lg text-center w-80">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-20 h-20 mx-auto mb-4">
+        <h2 class="text-white text-xl font-bold mb-6">SIGN UP</h2>
+        <form id="signup-form">
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500">&#128100;</span>
+                <input type="text" id="username" placeholder="Username" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            </div>
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500">&#9993;</span>
+                <input type="email" id="email" placeholder="Email" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            </div>
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500">&#128274;</span>
+                <input type="password" id="password" placeholder="Password" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            </div>
+            <button type="submit" class="w-full bg-white text-blue-500 font-bold py-2 rounded-lg shadow-md hover:bg-gray-200 transition">SIGN UP</button>
+        </form>
+        <div class="mt-4 flex justify-between">
+            <a href="signin.html" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600">Sign In</a>
+            <a href="index.html" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600">Home</a>
+        </div>
+        <p id="error-message" class="text-red-500 text-sm mt-2 text-center hidden"></p>
+    </div>
+
+    <script>
+        document.getElementById("signup-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (!username || !email || !password) {
+                errorMessage.textContent = "All fields are required!";
+                errorMessage.classList.remove("hidden");
+                return;
+            }
+
+            if (password.length < 6) {
+                errorMessage.textContent = "Password must be at least 6 characters long.";
+                errorMessage.classList.remove("hidden");
+                return;
+            }
+
+            // Lưu vào localStorage
+            const userData = { username, email, password };
+            localStorage.setItem(email, JSON.stringify(userData));
+
+            alert("Sign up successful! Redirecting to Sign In page.");
+            window.location.href = "signin.html";
+        });
+    </script>
+</body>
+</html>

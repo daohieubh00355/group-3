@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTEC IMAGES AI - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <header class="bg-blue-600 text-white py-4 shadow-lg">
+        <nav class="container mx-auto flex justify-between items-center px-6">
+            <div class="flex items-center space-x-2">
+                <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="Logo" class="h-8 w-8">
+                <div class="text-2xl font-bold">BTEC IMAGES AI</div>
+            </div>
+            <ul class="flex space-x-6">
+                <li><a href="index.html" class="hover:underline">Home</a></li>
+                <li><a href="#services" class="hover:underline">Services</a></li>
+                <li><a href="#" class="hover:underline">Photo Editing with AI</a></li>
+                <li><a href="signup.html" class="hover:underline" id="signup-link">Sign Up</a></li>
+                <li><a href="signin.html" class="hover:underline" id="login-link">Sign In</a></li>
+                <li id="user-info" class="hidden text-white font-bold"></li>
+                <li><button id="logout-button" class="hidden bg-red-500 px-3 py-1 rounded-lg">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="home" class="hero bg-cover bg-center h-[500px] flex flex-col items-center justify-center text-white text-center transition-all duration-500 hover:opacity-90" style="background-image: url('https://www.eetimes.com/wp-content/uploads/AdobeStock_599678056.jpeg');">
+        <h1 class="text-4xl font-bold drop-shadow-lg">AI Photo Editor</h1>
+        <p id="welcome-message" class="text-lg mt-4 drop-shadow-md"></p>
+    </section>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const username = localStorage.getItem("loggedInUser");
+            const userInfo = document.getElementById("user-info");
+            const logoutButton = document.getElementById("logout-button");
+            const signupLink = document.getElementById("signup-link");
+            const loginLink = document.getElementById("login-link");
+            const welcomeMessage = document.getElementById("welcome-message");
+
+            if (username) {
+                userInfo.textContent = `Hello, ${username}`;
+                welcomeMessage.textContent = `Hello, ${username}! Welcome to AI Photo Editor`;
+                userInfo.classList.remove("hidden");
+                logoutButton.classList.remove("hidden");
+                signupLink.classList.add("hidden");
+                loginLink.classList.add("hidden");
+            } else {
+                welcomeMessage.textContent = "A powerful assistant to help you edit photos with AI. Turn your ideas into reality.";
+            }
+logoutButton.addEventListener("click", function() {
+                localStorage.removeItem("loggedInUser");
+                window.location.reload();
+            });
+        });
+    </script>
+    
+    <section id="services" class="py-16 container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">Our AI Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/648c73b8352f4d10a8ff79ea8bb229a3/image_editor.png" class="mb-4 w-full rounded-lg"> 
+                AI Image Editor
+            </div>
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/3685da5f3680468aa6cadc400a52bb08/bg_remove_thumb.png" class="mb-4 w-full rounded-lg"> 
+                Background Remover
+            </div>
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/210f452c80e0482c89edf7a69fec4d46/colorizer.png" class="mb-4 w-full rounded-lg"> 
+                Image Colorizer
+            </div>
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/0807ebc952fc4e0f9c953ece4551ff22/super_res.png" class="mb-4 w-full rounded-lg"> 
+                Super Resolution
+            </div>
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/eafea118c5204c4ca57096699527f5b3/Before.png" class="mb-4 w-full rounded-lg"> 
+                Expand Image
+            </div>
+            <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
+                <img src="https://images.deepai.org/machine-learning-models/b6dcce965af54c26918924813f3cd288/cyborg.jpg" class="mb-4 w-full rounded-lg"> 
+                Create Image with Text
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
+        <p>&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
+    </footer>
+</body>
+</html>

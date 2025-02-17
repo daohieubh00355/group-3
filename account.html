@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-600 flex items-center justify-center h-screen">
+
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+        <h2 class="text-xl font-bold text-blue-600">Account Management</h2>
+        <ul id="account-list" class="mt-4 text-left"></ul>
+        <button onclick="clearAccounts()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Clear All Accounts</button>
+    </div>
+
+    <script>
+        function loadAccounts() {
+            const accountList = document.getElementById("account-list");
+            accountList.innerHTML = "";
+
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                let user = JSON.parse(localStorage.getItem(key));
+
+                let li = document.createElement("li");
+                li.innerHTML = `<strong>${user.username}</strong> - ${user.email} 
+                    <button onclick="deleteAccount('${key}')" class="ml-2 text-red-500">Delete</button>`;
+                accountList.appendChild(li);
+            }
+        }
+
+        function deleteAccount(email) {
+            localStorage.removeItem(email);
+            loadAccounts();
+        }
+
+        function clearAccounts() {
+            localStorage.clear();
+            loadAccounts();
+        }
+
+        loadAccounts();
+    </script>
+
+</body>
+</html>

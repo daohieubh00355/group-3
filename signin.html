@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center h-screen bg-blue-600 relative">
+    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="absolute top-4 left-4 w-80 h-auto">
+
+    <div class="bg-blue-500 p-8 rounded-3xl shadow-lg text-center w-80">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-20 h-20 mx-auto mb-4">
+        <h2 class="text-white text-xl font-bold mb-6">SIGN IN</h2>
+        <form id="signin-form">
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500">&#128100;</span>
+                <input type="text" id="email" placeholder="Email" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            </div>
+            <div class="relative mb-4">
+                <span class="absolute left-3 top-3 text-gray-500">&#128274;</span>
+                <input type="password" id="password" placeholder="Password" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            </div>
+            <button type="submit" class="w-full bg-white text-blue-500 font-bold py-2 rounded-lg shadow-md hover:bg-gray-200 transition">LOGIN</button>
+        </form>
+        <div class="mt-4 text-white">
+            <a href="signup.html" class="underline hover:text-gray-200">Sign Up</a> | 
+            <a href="index.html" class="underline hover:text-gray-200">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("signin-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            const storedData = localStorage.getItem(email);
+
+            if (!storedData) {
+                alert("User not found!");
+                return;
+            }
+
+            const user = JSON.parse(storedData);
+
+            if (user.password === password) {
+                localStorage.setItem('loggedInUser', email); // Lưu email vào localStorage
+                alert("Login successful! Redirecting to Home page.");
+                window.location.href = "index.html"; // Chuyển đến trang Home
+            } else {
+                alert("Incorrect password!");
+            }
+        });
+    </script>
+
+</body>
+</html>
