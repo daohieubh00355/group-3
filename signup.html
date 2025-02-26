@@ -5,62 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: auto;
+            opacity: 0.08;
+        }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .input-container span {
+            font-size: 20px;
+            color: #2563eb;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+    </style>
 </head>
-<body class="flex items-center justify-center h-screen bg-blue-600 relative">
-    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="absolute top-4 left-4 w-80 h-auto">
+<body class="flex items-center justify-center h-screen bg-gradient-to-br from-blue-700 to-blue-500 relative overflow-hidden">
+    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="background-logo">
 
-    <div class="bg-blue-500 p-8 rounded-3xl shadow-lg text-center w-80">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-20 h-20 mx-auto mb-4">
-        <h2 class="text-white text-xl font-bold mb-6">SIGN UP</h2>
-        <form id="signup-form">
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-3 text-gray-500">&#128100;</span>
-                <input type="text" id="username" placeholder="Username" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+    <div class="bg-white p-12 rounded-3xl shadow-2xl text-center w-96 relative z-10">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-blue-600">
+        <h2 class="text-blue-600 text-3xl font-extrabold mb-6">Create an Account</h2>
+        <form id="signup-form" class="space-y-5">
+            <div class="input-container">
+                <span>&#128100;</span>
+                <input type="text" id="username" placeholder="Enter your username" class="input-field" required>
             </div>
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-3 text-gray-500">&#9993;</span>
-                <input type="email" id="email" placeholder="Email" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            <div class="input-container">
+                <span>&#9993;</span>
+                <input type="email" id="email" placeholder="Enter your email" class="input-field" required>
             </div>
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-3 text-gray-500">&#128274;</span>
-                <input type="password" id="password" placeholder="Password" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            <div class="input-container">
+                <span>&#128274;</span>
+                <input type="password" id="password" placeholder="Enter your password" class="input-field" required>
             </div>
-            <button type="submit" class="w-full bg-white text-blue-500 font-bold py-2 rounded-lg shadow-md hover:bg-gray-200 transition">SIGN UP</button>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Sign Up</button>
         </form>
-        <div class="mt-4 flex justify-between">
-            <a href="signin.html" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600">Sign In</a>
-            <a href="index.html" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600">Home</a>
+        <div class="mt-4 text-gray-600">
+            <a href="signin.html" class="underline font-semibold hover:text-blue-500">Already have an account? Sign In</a>
         </div>
-        <p id="error-message" class="text-red-500 text-sm mt-2 text-center hidden"></p>
     </div>
-
+    
     <script>
-        document.getElementById("signup-form").addEventListener("submit", function(event) {
+        document.getElementById("signup-form").addEventListener("submit", async function(event) {
             event.preventDefault();
-
+    
             const username = document.getElementById("username").value.trim();
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
-            const errorMessage = document.getElementById("error-message");
-
-            if (!username || !email || !password) {
-                errorMessage.textContent = "All fields are required!";
-                errorMessage.classList.remove("hidden");
-                return;
+    
+            const response = await fetch("http://localhost:5000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
+    
+            if (response.ok) {
+                alert("Sign up successful! Redirecting to Sign In...");
+                window.location.href = "signin.html";
+            } else {
+                const errorMsg = await response.json();
+                alert("Error: " + errorMsg.error);
             }
-
-            if (password.length < 6) {
-                errorMessage.textContent = "Password must be at least 6 characters long.";
-                errorMessage.classList.remove("hidden");
-                return;
-            }
-
-            // Lưu vào localStorage
-            const userData = { username, email, password };
-            localStorage.setItem(email, JSON.stringify(userData));
-
-            alert("Sign up successful! Redirecting to Sign In page.");
-            window.location.href = "signin.html";
         });
     </script>
 </body>

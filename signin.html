@@ -5,55 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .background-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: auto;
+            opacity: 0.08;
+        }
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .input-container span {
+            font-size: 20px;
+            color: #2563eb;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+    </style>
 </head>
-<body class="flex items-center justify-center h-screen bg-blue-600 relative">
-    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="absolute top-4 left-4 w-80 h-auto">
+<body class="flex items-center justify-center h-screen bg-gradient-to-br from-blue-700 to-blue-500 relative overflow-hidden">
+    <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="BTEC Logo" class="background-logo">
 
-    <div class="bg-blue-500 p-8 rounded-3xl shadow-lg text-center w-80">
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-20 h-20 mx-auto mb-4">
-        <h2 class="text-white text-xl font-bold mb-6">SIGN IN</h2>
-        <form id="signin-form">
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-3 text-gray-500">&#128100;</span>
-                <input type="text" id="email" placeholder="Email" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+    <div class="bg-white p-12 rounded-3xl shadow-2xl text-center w-96 relative z-10">
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-blue-600">
+        <h2 class="text-blue-600 text-3xl font-extrabold mb-6">Welcome!</h2>
+        <form id="signin-form" class="space-y-5">
+            <div class="input-container">
+                <span>&#128100;</span>
+                <input type="email" id="email" placeholder="Enter your email" class="input-field" required>
             </div>
-            <div class="relative mb-4">
-                <span class="absolute left-3 top-3 text-gray-500">&#128274;</span>
-                <input type="password" id="password" placeholder="Password" class="pl-10 pr-4 py-2 w-full rounded-lg shadow-md focus:outline-none" required>
+            <div class="input-container">
+                <span>&#128274;</span>
+                <input type="password" id="password" placeholder="Enter your password" class="input-field" required>
             </div>
-            <button type="submit" class="w-full bg-white text-blue-500 font-bold py-2 rounded-lg shadow-md hover:bg-gray-200 transition">LOGIN</button>
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">Sign In</button>
         </form>
-        <div class="mt-4 text-white">
-            <a href="signup.html" class="underline hover:text-gray-200">Sign Up</a> | 
-            <a href="index.html" class="underline hover:text-gray-200">Back to Home</a>
+        <div class="mt-4 text-gray-600">
+            <a href="signup.html" class="underline font-semibold hover:text-blue-500">Don't have an account? Sign up</a>
         </div>
     </div>
-
+    
     <script>
-        document.getElementById("signin-form").addEventListener("submit", function(event) {
+        document.getElementById("signin-form").addEventListener("submit", async function(event) {
             event.preventDefault();
-
+    
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
-
-            const storedData = localStorage.getItem(email);
-
-            if (!storedData) {
-                alert("User not found!");
-                return;
-            }
-
-            const user = JSON.parse(storedData);
-
-            if (user.password === password) {
-                localStorage.setItem('loggedInUser', email); // Lưu email vào localStorage
-                alert("Login successful! Redirecting to Home page.");
-                window.location.href = "index.html"; // Chuyển đến trang Home
+    
+            const response = await fetch("http://localhost:5000/signin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+    
+            if (response.ok) {
+                const { token } = await response.json();
+                localStorage.setItem("token", token);
+                window.location.href = "index.html";
             } else {
-                alert("Incorrect password!");
+                const errorMsg = await response.json();
+                alert("Error: " + errorMsg.error);
             }
         });
     </script>
-
 </body>
 </html>

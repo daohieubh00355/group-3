@@ -5,141 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTEC IMAGES AI - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .dropdown-menu { display: none; position: absolute; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 220px; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .nav-item { transition: color 0.3s ease-in-out; }
+        .nav-item:hover { color: #FFD700; }
+        .hero { background-size: cover; background-position: center; }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-    <header class="bg-blue-600 text-white py-4 shadow-lg">
+<body class="bg-gray-50 text-gray-900">
+    <header class="bg-blue-700 text-white py-4 shadow-lg fixed w-full top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center px-6">
-            <div class="flex items-center space-x-2">
-                <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="Logo" class="h-8 w-8">
-                <div class="text-2xl font-bold">BTEC IMAGES AI</div>
+            <div class="flex items-center space-x-3">
+                <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="Logo" class="h-10 w-10 rounded-full">
+                <div class="text-2xl font-extrabold">BTEC IMAGES AI</div>
             </div>
-            <ul class="flex space-x-6">
-                <li><a href="index.html" class="hover:underline">Home</a></li>
-                <li><a href="#services" class="hover:underline">Services</a></li>
-                <li><a href="#" class="hover:underline" id="photo-editing-link">Photo Editing with AI</a></li>
-                <li><a href="signup.html" class="hover:underline" id="signup-link">Sign Up</a></li>
-                <li><a href="signin.html" class="hover:underline" id="login-link">Sign In</a></li>
-                <li id="user-info" class="hidden text-white font-bold"></li>
-                <li><button id="logout-button" class="hidden bg-red-500 px-3 py-1 rounded-lg">Logout</button></li>
+            <ul class="flex space-x-8 items-center">
+                <li><a href="index.html" class="nav-item text-lg">Home</a></li>
+                <li><a href="#services" class="nav-item text-lg">Services</a></li>
+                <li><a href="photo_editing.html" class="nav-item text-lg">Photo Editing</a></li>
+                <li class="relative dropdown">
+                    <button id="user-button" class="hidden flex items-center space-x-2 bg-gray-200 text-black px-4 py-2 rounded-lg shadow-md">
+                        <img id="user-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="h-8 w-8 rounded-full">
+                        <span id="user-name"></span>
+                    </button>
+                    <ul class="dropdown-menu py-2 text-gray-900 shadow-lg">
+                        <li class="px-4 py-2 font-semibold">👤 <span id="user-email"></span></li>
+                        <li class="border-t"><button id="logout-button" class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white">Logout</button></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
-    
-    <!-- Hero Section -->
-    <section id="home" class="hero bg-cover bg-center h-[500px] flex flex-col items-center justify-center text-white text-center transition-all duration-500 hover:opacity-90" style="background-image: url('https://www.eetimes.com/wp-content/uploads/AdobeStock_599678056.jpeg');">
-        <h1 class="text-4xl font-bold drop-shadow-lg">AI Photo Editor</h1>
-        <p id="welcome-message" class="text-lg mt-4 drop-shadow-md"></p>
+
+    <section id="home" class="hero h-[600px] flex flex-col items-center justify-center text-white text-center mt-16 bg-fixed" style="background-image: url('https://www.eetimes.com/wp-content/uploads/AdobeStock_599678056.jpeg');">
+        <h1 class="text-5xl font-extrabold drop-shadow-xl">AI Photo Editor</h1>
+        <p class="text-xl mt-4 drop-shadow-lg">A powerful AI assistant to turn your ideas into reality.</p>
     </section>
 
-    <!-- Photo Editing Section (Hidden initially) -->
-    <section id="photo-editing-section" class="hidden py-16 container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6">AI Photo Editing</h2>
-        <p>Chào mừng bạn đến với công cụ chỉnh sửa ảnh sử dụng AI của chúng tôi! Hãy chọn công cụ mà bạn muốn thử ngay.</p>
-
-        <!-- AI Tools Buttons -->
-        <div class="mt-8">
-            <button class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">AI Image Editor</button>
-            <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 ml-4">Background Remover</button>
-            <button class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 ml-4">Image Colorizer</button>
-            <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 ml-4">Super Resolution</button>
-            <button class="bg-purple-500 text-white px-6 py-2 rounded-lg hover:bg-purple-600 ml-4">Expand Image</button>
-            <button class="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 ml-4">Create Image with Text</button>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-16 container mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6">Our AI Services</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
-            <!-- AI Image Editor -->
+    <section id="services" class="py-20 container mx-auto text-center">
+        <h2 class="text-4xl font-extrabold mb-8">Our AI Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8">
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/648c73b8352f4d10a8ff79ea8bb229a3/image_editor.png" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">AI Image Editor</h3>
-                <p>Edit your images with advanced AI tools to enhance or transform them.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Start Editing</button>
+                AI Image Editor
             </div>
-            
-            <!-- Background Remover -->
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/3685da5f3680468aa6cadc400a52bb08/bg_remove_thumb.png" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">Background Remover</h3>
-                <p>Easily remove backgrounds from your images for a clean and professional look.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Remove Background</button>
+                Background Remover
             </div>
-            
-            <!-- Image Colorizer -->
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/210f452c80e0482c89edf7a69fec4d46/colorizer.png" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">Image Colorizer</h3>
-                <p>Turn black and white photos into vibrant colored images with AI.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Colorize Image</button>
+                Image Colorizer
             </div>
-            
-            <!-- Super Resolution -->
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/0807ebc952fc4e0f9c953ece4551ff22/super_res.png" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">Super Resolution</h3>
-                <p>Increase the resolution of your images to make them sharper and clearer.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Enhance Resolution</button>
+                Super Resolution
             </div>
-            
-            <!-- Expand Image -->
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/eafea118c5204c4ca57096699527f5b3/Before.png" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">Expand Image</h3>
-                <p>Expand your image while preserving quality with the power of AI.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Expand Image</button>
+                Expand Image
             </div>
-            
-            <!-- Create Image with Text -->
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/b6dcce965af54c26918924813f3cd288/cyborg.jpg" class="mb-4 w-full rounded-lg"> 
-                <h3 class="font-semibold text-lg">Create Image with Text</h3>
-                <p>Generate unique images by simply describing what you want to see.</p>
-                <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">Create Image</button>
+                Create Image with Text
             </div>
         </div>
     </section>
     
-    <footer class="bg-blue-600 text-white text-center py-6 mt-10">
-        <p>&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
+    <footer class="bg-blue-700 text-white text-center py-8 mt-12">
+        <p class="text-lg">&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Handle login/logout states
-            const username = localStorage.getItem("loggedInUser");
-            const userInfo = document.getElementById("user-info");
-            const logoutButton = document.getElementById("logout-button");
-            const signupLink = document.getElementById("signup-link");
-            const loginLink = document.getElementById("login-link");
-            const welcomeMessage = document.getElementById("welcome-message");
+        
+        document.addEventListener("DOMContentLoaded", async function() {
+            const token = localStorage.getItem("token");
+            if (!token) { window.location.href = "signin.html"; return; }
 
-            if (username) {
-                userInfo.textContent = `Hello, ${username}`;
-                welcomeMessage.textContent = `Hello, ${username}! Welcome to AI Photo Editor`;
-                userInfo.classList.remove("hidden");
-                logoutButton.classList.remove("hidden");
-                signupLink.classList.add("hidden");
-                loginLink.classList.add("hidden");
-            } else {
-                welcomeMessage.textContent = "A powerful assistant to help you edit photos with AI. Turn your ideas into reality.";
+            try {
+                const response = await fetch("http://localhost:5000/profile", {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (!response.ok) { localStorage.removeItem("token"); window.location.href = "signin.html"; return; }
+
+                const user = await response.json();
+                document.getElementById("user-name").textContent = user.username;
+                document.getElementById("user-email").textContent = user.email;
+                document.getElementById("user-button").classList.remove("hidden");
+                document.getElementById("logout-button").addEventListener("click", function() {
+                    localStorage.removeItem("token");
+                    window.location.href = "signin.html";
+                });
+            } catch (error) {
+                localStorage.removeItem("token");
+                window.location.href = "signin.html";
             }
-
-            logoutButton.addEventListener("click", function() {
-                localStorage.removeItem("loggedInUser");
-                window.location.reload();
-            });
-
-            // Handle "Photo Editing with AI" link click
-            const photoEditingLink = document.getElementById("photo-editing-link");
-            const photoEditingSection = document.getElementById("photo-editing-section");
-
-            photoEditingLink.addEventListener("click", function(event) {
-                event.preventDefault(); // Prevent default navigation
-                photoEditingSection.classList.remove("hidden"); // Show photo editing section
-            });
         });
+        document.getElementById("user-button").addEventListener("click", function() {
+    window.location.href = "photo_editing.html";
+});
+
     </script>
 </body>
 </html>
