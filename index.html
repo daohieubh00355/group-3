@@ -47,8 +47,8 @@
         <h2 class="text-4xl font-extrabold mb-8">Our AI Services</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-8">
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
-                <img src="https://images.deepai.org/machine-learning-models/648c73b8352f4d10a8ff79ea8bb229a3/image_editor.png" class="mb-4 w-full rounded-lg"> 
-                AI Image Editor
+                <img src="https://images.deepai.org/machine-learning-models/0cca01dade8a48ac95bc5e7d0a4ed5c1/selfie.png" class="mb-4 w-full rounded-lg"> 
+                AI Selfie Generator
             </div>
             <div class="bg-white p-6 shadow-lg rounded-lg hover:scale-105 transition-transform duration-300">
                 <img src="https://images.deepai.org/machine-learning-models/3685da5f3680468aa6cadc400a52bb08/bg_remove_thumb.png" class="mb-4 w-full rounded-lg"> 
@@ -78,7 +78,6 @@
     </footer>
 
     <script>
-        
         document.addEventListener("DOMContentLoaded", async function() {
             const token = localStorage.getItem("token");
             if (!token) { window.location.href = "signin.html"; return; }
@@ -103,10 +102,6 @@
                 window.location.href = "signin.html";
             }
         });
-        document.getElementById("user-button").addEventListener("click", function() {
-    window.location.href = "photo_editing.html";
-});
-
     </script>
 </body>
 </html>

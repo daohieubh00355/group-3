@@ -6,36 +6,62 @@
     <title>Photo Editing with AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+        .dropdown-menu { display: none; position: absolute; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); min-width: 220px; }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .nav-item { transition: color 0.3s ease-in-out; }
+        .nav-item:hover { color: #FFD700; }
+        .hero { background-size: cover; background-position: center; }
+        body { display: flex; flex-direction: column; min-height: 100vh; }
+        .content { flex: 1; }
+
+        /* Loading Spinner */
+        #loadingSpinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
         }
-        .content {
-            flex: 1;
-        }   
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #09f;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white flex flex-col items-center" style="background-image: url('Blue Modern AI Technology Presentation.jpg'); background-size: cover; background-position: center;">
-    
-    <header class="w-full bg-blue-600 text-white py-4 shadow-lg fixed top-0">
+
+<body class="bg-gray-50 text-gray-900">
+    <header class="bg-blue-700 text-white py-4 shadow-lg fixed w-full top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center px-6">
-            <div class="flex items-center space-x-2">
-                <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="Logo" class="h-10 w-10">
-                <div class="text-2xl font-bold">BTEC IMAGES AI</div>        
+            <div class="flex items-center space-x-3">
+                <img src="https://btec.fpt.edu.vn/wp-content/uploads/2024/06/LogoBTEC.png" alt="Logo" class="h-10 w-10 rounded-full">
+                <div class="text-2xl font-extrabold">BTEC IMAGES AI</div>
             </div>
-            <ul class="flex space-x-6 items-center">
-                <li><a href="index.html" class="hover:underline">Home</a></li>
-                <li><a href="photo_editing.html" class="hover:underline">Photo Editing</a></li>
-                
+            <ul class="flex space-x-8 items-center">
+                <li><a href="index.html" class="nav-item text-lg">Home</a></li>
+                <li><a href="#services" class="nav-item text-lg">Services</a></li>
+                <li><a href="photo_editing.html" class="nav-item text-lg">Photo Editing</a></li>
+                <li class="relative dropdown">
+                    <button id="user-button" class="hidden flex items-center space-x-2 bg-gray-200 text-black px-4 py-2 rounded-lg shadow-md">
+                        <img id="user-avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="h-8 w-8 rounded-full">
+                        <span id="user-name"></span>
+                    </button>
+                    <ul class="dropdown-menu py-2 text-gray-900 shadow-lg">
+                        <li class="px-4 py-2 font-semibold">👤 <span id="user-email"></span></li>
+                        <li class="border-t"><button id="logout-button" class="w-full text-left px-4 py-2 hover:bg-red-600 hover:text-white">Logout</button></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
-    <section class="mt-8 text-center">
-        <h2 class="text-2xl font-extrabold">Your Edited Photos</h2>
-        <div id="gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4"></div>
-    </section>
-    
+
     <main class="content container mx-auto p-6 mt-20 text-center">
         <h2 class="text-4xl font-extrabold mb-6">Photo Editing with AI</h2>
         
@@ -43,14 +69,15 @@
             <label for="imageUpload" class="font-bold">Choose an Image:</label>
             <input type="file" id="imageUpload" accept="image/*" class="p-2 border rounded w-full">
             <input type="text" id="textInput" placeholder="Enter text for image generation" class="p-2 border rounded w-full mt-2 hidden">
+            <input type="text" id="selfieTextInput" placeholder="Enter text for AI Selfie Generator" class="p-2 border rounded w-full mt-2 hidden">
             
             <select id="aiFunction" class="p-2 border rounded w-full mt-4">
-                <option value="image-editor">AI Image Editor</option>
                 <option value="background-remover">Background Remover</option>
                 <option value="colorizer">Image Colorizer</option>
                 <option value="super-resolution">Super Resolution</option>
                 <option value="image-expansion">Expand Image</option>
                 <option value="text-to-image">Create Image with Text</option>
+                <option value="ai-selfie-generator">AI Selfie Generator</option>
             </select>
             
             <button id="processImage" class="bg-blue-600 text-white px-4 py-2 rounded mt-4 w-full hover:bg-blue-700">Process Image</button>
@@ -65,138 +92,20 @@
             <div>
                 <h3 class="text-xl font-bold">Edited photo</h3>
                 <img id="outputImage" class="mt-4 mx-auto max-w-full border p-2 hidden">
-                <a id="downloadImage" class="hidden mt-4 bg-green-500 text-white px-4 py-2 rounded" download="edited_image.png">Download Image</a>
+                <button id="downloadImage" class="hidden mt-4 bg-green-500 text-white px-4 py-2 rounded">Download Image</button>
             </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="hidden">
+            <div class="spinner"></div>
         </div>
     </main>
     
-    <footer class="w-full bg-blue-600 text-white text-center py-4 mt-auto">
-        <p>&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
+    <footer class="w-full bg-blue-700 text-white text-center py-8 mt-auto">
+        <p class="text-lg">&copy; 2025 BTEC IMAGES AI. All rights reserved.</p>
     </footer>
     
-    <script>
-        document.addEventListener("DOMContentLoaded", async function() {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        window.location.href = "signin.html";
-        return;
-    }
-
-    // Hiển thị ảnh đã chỉnh sửa
-    async function loadUserImages() {
-        const response = await fetch("http://localhost:5000/user-images", {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-        const images = await response.json();
-        const gallery = document.getElementById("gallery");
-        gallery.innerHTML = "";
-        images.forEach(img => {
-            const imgElement = document.createElement("img");
-            imgElement.src = `http://localhost:5000${img.image_url}`;
-            imgElement.classList.add("rounded-lg", "shadow-lg", "w-40", "h-40", "object-cover");
-            gallery.appendChild(imgElement);
-        });
-    }
-
-    await loadUserImages();
-
-    // Xử lý tải lên ảnh mới
-    document.getElementById("processImage").addEventListener("click", async function() {
-        const fileInput = document.getElementById("imageUpload");
-        if (!fileInput.files.length) {
-            alert("Please upload an image.");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("image", fileInput.files[0]);
-
-        const response = await fetch("http://localhost:5000/upload-image", {
-            method: "POST",
-            body: formData,
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-
-        if (response.ok) {
-            alert("Image uploaded successfully!");
-            await loadUserImages(); // Cập nhật danh sách ảnh
-        } else {
-            alert("Error uploading image.");
-        }
-    });
-});
-
-        document.getElementById("aiFunction").addEventListener("change", function() {
-            const textInput = document.getElementById("textInput");
-            const fileInput = document.getElementById("imageUpload");
-            if (this.value === "text-to-image") {
-                textInput.classList.remove("hidden");
-                fileInput.classList.add("hidden");
-            } else {
-                textInput.classList.add("hidden");
-                fileInput.classList.remove("hidden");
-            }
-        });
-
-        document.getElementById("processImage").addEventListener("click", async function() {
-            const fileInput = document.getElementById("imageUpload");
-            const textInput = document.getElementById("textInput");
-            const aiFunction = document.getElementById("aiFunction").value;
-            const outputImage = document.getElementById("outputImage");
-            const uploadedImage = document.getElementById("uploadedImage");
-            const downloadImage = document.getElementById("downloadImage");
-            
-            const formData = new FormData();
-            
-            if (aiFunction === "text-to-image") {
-                if (!textInput.value.trim()) {
-                    alert("Please enter text to generate an image.");
-                    return;
-                }
-                formData.append("text", textInput.value);
-            } else {
-                if (!fileInput.files.length) {
-                    alert("Please upload an image.");
-                    return;
-                }
-                formData.append("image", fileInput.files[0]);
-                uploadedImage.src = URL.createObjectURL(fileInput.files[0]);
-                uploadedImage.classList.remove("hidden");
-            }
-            
-            const apiKeys = "96ac737f-e36e-4cab-b344-946dd916730a";
-            const endpoints = {
-                "image-editor": "https://api.deepai.org/api/image-editor",
-                "background-remover": "https://api.deepai.org/api/background-remover",
-                "colorizer": "https://api.deepai.org/api/colorizer",
-                "super-resolution": "https://api.deepai.org/api/torch-srgan",
-                "image-expansion": "https://api.deepai.org/api/zoom-out",
-                "text-to-image": "https://api.deepai.org/api/text2img"
-            };
-            
-            try {
-                const response = await fetch(endpoints[aiFunction], {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "api-key": apiKeys
-                    }
-                });
-                
-                const result = await response.json();
-                if (result.output_url) {
-                    outputImage.src = result.output_url;
-                    outputImage.classList.remove("hidden");
-                    downloadImage.href = result.output_url;
-                    downloadImage.classList.remove("hidden");
-                } else {
-                    alert("Error processing image");
-                }
-            } catch (error) {
-                alert("Failed to process image.");
-            }
-        });
-        
-    </script>
+    <script src="editimgs.js"></script>
 </body>
 </html>
