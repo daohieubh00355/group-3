@@ -86,7 +86,7 @@ async function processImage() {
         uploadedImage.src = URL.createObjectURL(fileInput.files[0]);
         uploadedImage.classList.remove("hidden");
     } else {
-        if (!fileInput.files.length) {
+        if (!fileInput.files.length) {  
             alert("Please upload an image.");
             loadingSpinner.classList.add("hidden");
             return;
@@ -96,7 +96,7 @@ async function processImage() {
         uploadedImage.classList.remove("hidden");
     }
     
-    const apiKeys = "96ac737f-e36e-4cab-b344-946dd916730a";
+    const apiKeys = "617d4f0a-297c-4cf8-aa91-c1286cf8a60d";
     const endpoints = {
         "background-remover": "https://api.deepai.org/api/background-remover",
         "colorizer": "https://api.deepai.org/api/colorizer",
